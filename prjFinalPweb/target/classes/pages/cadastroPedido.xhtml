@@ -1,0 +1,175 @@
+
+<ui:composition template="templateMenu.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui2="http://java.sun.com/jsf/facelets"
+	xmlns:tm="http://java.sun.com/jsf/composite/terminal/1_0/components">
+
+	<ui:define name="title">
+		<h:outputText value="Cadastro Pedido" />
+	</ui:define>
+
+	<ui:define name="principal">
+
+		<h1>
+			<p:outputLabel value="Menu" />
+		</h1>
+		<h:form id="formPedidos">
+
+			<p:panelGrid columns="2">
+				<p:outputLabel value="Produto1 :" />
+				<p:inputText value="#{pedidoManagedBean.pedido.produto1}" />
+
+				<p:outputLabel value="Produto2:" />
+				<p:inputText value="#{pedidoManagedBean.pedido.produto2}" />
+
+				<p:outputLabel value="Produto3:" />
+				<p:inputText value="#{pedidoManagedBean.pedido.produto3}" />
+				
+				
+				<p:outputLabel value="Produto4:" />
+				<p:inputText value="#{pedidoManagedBean.pedido.produto4}" />
+				
+				
+				<p:outputLabel value="Produto5 :" />
+				<p:inputText value="#{pedidoManagedBean.pedido.produto5}" />
+
+				<p:outputLabel value="Cadastro: " />
+
+				<!-- Select o Cadastro para escolher a venda relacionada -->
+				<p:outputLabel value="Produto1 :" />
+				<p:selectOneMenu value="#{pedidoManagedBean.cadastro}"
+					converter="converterCadastro">
+					<f:selectItem itemValue=""
+						itemLabel="Cadastro" />
+					<f:selectItems value="#{pedidoManagedBean.cadastros}" var="aux"
+						itemValue="#{aux}" itemLabel="#{aux.cliente}" />
+				</p:selectOneMenu>
+
+			</p:panelGrid>
+			<p:commandButton value="Salvar"
+				action="#{pedidoManagedBean.salvar}"
+				update=":formPedidos, :formTablePedidos" />
+		</h:form>
+
+		<h3>
+			<p:outputLabel value="Cadastro Pedido" />
+		</h3>
+
+		<h:form id="formTablePedidos">
+
+
+
+			<p:dataTable value="#{pedidoManagedBean.pedidos}" var="cad"
+				editable="true" id="tablePedidos">
+
+				<p:ajax event="rowEdit" listener="#{pedidoManagedBean.onRowEdit}"
+					update="tablePedidos" />
+
+				<p:column headerText="Codigo">
+					<h:outputText value="#{cad.codigo}" />
+				</p:column>
+
+				<p:column headerText="Produto1">
+					<p:cellEditor>
+						<f:facet name="output">
+							<p:outputLabel value="#{cad.produto1}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText id="produto1" value="#{cad.produto1}"
+								style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				
+				
+				<p:column headerText="Produto2">
+					<p:cellEditor>
+						<f:facet name="output">
+							<p:outputLabel value="#{cad.produto2}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText id="produto2" value="#{cad.produto2}"
+								style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				
+				
+				<p:column headerText="Produto3">
+					<p:cellEditor>
+						<f:facet name="output">
+							<p:outputLabel value="#{cad.produto3}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText id="produto3" value="#{cad.produto3}"
+								style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				
+				
+				<p:column headerText="Produto4">
+					<p:cellEditor>
+						<f:facet name="output">
+							<p:outputLabel value="#{cad.produto4}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText id="produto4" value="#{cad.produto4}"
+								style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				
+				
+				<p:column headerText="Produto5">
+					<p:cellEditor>
+						<f:facet name="output">
+							<p:outputLabel value="#{cad.produto5}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText id="produto5" value="#{cad.produto5}"
+								style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Cadastro">
+					<p:cellEditor>
+						<f:facet name="output">
+							<p:outputLabel value="#{pedido.produto1}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneMenu value="#{cad.cadastro}"
+								converter="converterCadastro" style="width:100%">
+								<f:selectItem itemValue=""
+									itemLabel="Cadastro" />
+								<f:selectItems value="#{pedidoManagedBean.cadastros}" var="aux"
+									itemValue="#{aux}" itemLabel="#{cad.produto1}" />
+							</p:selectOneMenu>
+
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column style="width:70px"
+					headerText="Opcoes">
+
+
+
+					<p:rowEditor />
+
+					<p:commandLink id="remover" styleClass="ui-icon ui-icon-trash"
+						style="text-align:center"
+						actionListener="#{pedidoManagedBean.remove(cad)}"
+						update=":formTablePedidos" />
+
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
